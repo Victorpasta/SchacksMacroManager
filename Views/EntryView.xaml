@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="SchacksMacroManager.Views.EntryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prog="clr-namespace:SchacksMacroManager"
+             xmlns:local="clr-namespace:SchacksMacroManager.Views"
+             xmlns:vm="clr-namespace:SchacksMacroManager.ViewModels"
+             xmlns:cal="http://www.caliburnproject.org" d:DataContext="{d:DesignInstance Type=vm:EntryViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="1" Height="30" Width="30" Margin="5" Content="X" cal:Message.Attach="[Event Click] = [Action Delete]"/>
+        <Label Grid.Row="0" FontSize="15" Grid.Column="1" Content="Name" HorizontalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="1" FontSize="30" Text="{Binding Name}"/>
+        <Label Grid.Row="0" FontSize="15" Grid.Column="2" Content="Carbs" HorizontalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="2" FontSize="30" IsEnabled="False" Text="{Binding Carbs, Mode=OneWay}"/>
+        <Label Grid.Row="0" FontSize="15" Grid.Column="3" Content="Protein" HorizontalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="3" FontSize="30" IsEnabled="False" Text="{Binding Protein, Mode=OneWay}"/>
+        <Label Grid.Row="0" FontSize="15" Grid.Column="4" Content="Fat" HorizontalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="4" FontSize="30" IsEnabled="False" Text="{Binding Fat, Mode=OneWay}"/>
+        <Label Grid.Row="0" FontSize="15" Grid.Column="5" Content="Kcal" HorizontalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="5" FontSize="30" IsEnabled="False" Text="{Binding Kcal, Mode=OneWay}"/>
+        <Grid Grid.ColumnSpan="5" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch">
+            <ListView ItemsSource="{Binding Ingredients}" ScrollViewer.CanContentScroll="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:IngredientView/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Margin="5" Grid.Column="0" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Center" Content="New Ingredient"/>
+            <Button Grid.Column="0" HorizontalAlignment="Right" IsEnabled="{Binding NewIngredientButtonEnabled}" FontSize="20" Height="30" Width="30" Content="+" cal:Message.Attach="[Event Click] = [Action AddNewIngredient]"/>
+            <ComboBox Margin="5" Grid.Column="2" MaxDropDownHeight="200" ItemsSource="{Binding AvailableIngredientsNames}" SelectedItem="{Binding NextIngredientName, Mode=TwoWay}">
+
+            </ComboBox>
+        </Grid>
+        
+    </Grid>
+</UserControl>

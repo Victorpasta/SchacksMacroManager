@@ -13,7 +13,6 @@ namespace SchacksMacroManager
         public double Carbs { get; set; }
         public double Fat { get; set; }
         public double Protein {  get; set; }
-        public int Grams { get; set; }
         public Ingredient(string name, double carbs, double fat, double protein) 
         {
             Name = name;

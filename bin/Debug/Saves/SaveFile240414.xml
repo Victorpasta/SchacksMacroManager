@@ -3,198 +3,79 @@
   <DailyCarbs>450</DailyCarbs>
   <DailyProtein>200</DailyProtein>
   <DailyFat>135</DailyFat>
-  <Entries>
-    <Entry>
-      <Ingredients>
-        <Ingredient>
-          <Name>Ägg</Name>
-          <Carbs>1.1</Carbs>
-          <Fat>11</Fat>
-          <Protein>13</Protein>
-          <Grams>250</Grams>
-        </Ingredient>
-        <Ingredient>
-          <Name>Mild ost</Name>
-          <Carbs>2</Carbs>
-          <Fat>17</Fat>
-          <Protein>31.2</Protein>
-          <Grams>0</Grams>
-        </Ingredient>
-        <Ingredient>
-          <Name>Äggvita</Name>
-          <Carbs>0</Carbs>
-          <Fat>0</Fat>
-          <Protein>9.7</Protein>
-          <Grams>150</Grams>
-        </Ingredient>
-        <Ingredient>
-          <Name>Mjölk</Name>
-          <Carbs>4.8</Carbs>
-          <Fat>1.5</Fat>
-          <Protein>3.4</Protein>
-          <Grams>450</Grams>
-        </Ingredient>
-      </Ingredients>
-      <Name>Frukost</Name>
-      <Carbs>24.35</Carbs>
-      <Fat>34.25</Fat>
-      <Protein>62.349999999999994</Protein>
-    </Entry>
-  </Entries>
+  <Entries />
   <AvailableIngredients>
     <Ingredient>
-      <Name>Ägg</Name>
-      <Carbs>1.1</Carbs>
-      <Fat>11</Fat>
-      <Protein>13</Protein>
-      <Grams>250</Grams>
-    </Ingredient>
-    <Ingredient>
-      <Name>Äggvita</Name>
+      <Name>äggvita</Name>
       <Carbs>0</Carbs>
       <Fat>0</Fat>
       <Protein>9.7</Protein>
-      <Grams>150</Grams>
     </Ingredient>
     <Ingredient>
       <Name>Anammas Formbar</Name>
       <Carbs>4</Carbs>
       <Fat>8.4</Fat>
       <Protein>16</Protein>
-      <Grams>550</Grams>
+    </Ingredient>
+    <Ingredient>
+      <Name>Cheese</Name>
+      <Carbs>0</Carbs>
+      <Fat>26</Fat>
+      <Protein>25</Protein>
     </Ingredient>
     <Ingredient>
       <Name>Cocunut Milk</Name>
       <Carbs>2</Carbs>
       <Fat>18</Fat>
       <Protein>1.8</Protein>
-      <Grams>0</Grams>
-    </Ingredient>
-    <Ingredient>
-      <Name>Corney peanut</Name>
-      <Carbs>55</Carbs>
-      <Fat>23</Fat>
-      <Protein>10</Protein>
-      <Grams>100</Grams>
     </Ingredient>
     <Ingredient>
       <Name>File Pieces</Name>
       <Carbs>1.2</Carbs>
       <Fat>4.7</Fat>
       <Protein>22.5</Protein>
-      <Grams>0</Grams>
-    </Ingredient>
-    <Ingredient>
-      <Name>Gul Lök</Name>
-      <Carbs>9</Carbs>
-      <Fat>0.1</Fat>
-      <Protein>1.1</Protein>
-      <Grams>250</Grams>
-    </Ingredient>
-    <Ingredient>
-      <Name>Ketchup</Name>
-      <Carbs>23.2</Carbs>
-      <Fat>0.1</Fat>
-      <Protein>1.2</Protein>
-      <Grams>100</Grams>
     </Ingredient>
     <Ingredient>
       <Name>Kokt Jasmin Ris</Name>
       <Carbs>32</Carbs>
       <Fat>0.3</Fat>
       <Protein>2.7</Protein>
-      <Grams>0</Grams>
     </Ingredient>
     <Ingredient>
-      <Name>Kokt Spaghetti</Name>
-      <Carbs>36.5</Carbs>
-      <Fat>0.65</Fat>
-      <Protein>5.5</Protein>
-      <Grams>300</Grams>
-    </Ingredient>
-    <Ingredient>
-      <Name>Köttfärssås</Name>
-      <Carbs>3.42</Carbs>
-      <Fat>2.842</Fat>
-      <Protein>4.152</Protein>
-      <Grams>600</Grams>
-    </Ingredient>
-    <Ingredient>
-      <Name>Krossade Tomater</Name>
-      <Carbs>3.5</Carbs>
-      <Fat>0</Fat>
-      <Protein>1.1</Protein>
-      <Grams>1170</Grams>
-    </Ingredient>
-    <Ingredient>
-      <Name>Majo</Name>
+      <Name>majo</Name>
       <Carbs>2</Carbs>
       <Fat>79</Fat>
       <Protein>2</Protein>
-      <Grams>0</Grams>
     </Ingredient>
     <Ingredient>
-      <Name>Mild ost</Name>
+      <Name>mild ost</Name>
       <Carbs>2</Carbs>
       <Fat>17</Fat>
-      <Protein>31.2</Protein>
-      <Grams>0</Grams>
+      <Protein>28</Protein>
     </Ingredient>
     <Ingredient>
-      <Name>Mjölk</Name>
-      <Carbs>4.8</Carbs>
-      <Fat>1.5</Fat>
-      <Protein>3.4</Protein>
-      <Grams>450</Grams>
-    </Ingredient>
-    <Ingredient>
-      <Name>Ost</Name>
-      <Carbs>0</Carbs>
-      <Fat>26</Fat>
-      <Protein>25</Protein>
-      <Grams>0</Grams>
-    </Ingredient>
-    <Ingredient>
-      <Name>Pågen limpan</Name>
+      <Name>pågen limpan</Name>
       <Carbs>52</Carbs>
       <Fat>1.9</Fat>
       <Protein>9.6</Protein>
-      <Grams>70</Grams>
     </Ingredient>
     <Ingredient>
-      <Name>Pommes</Name>
+      <Name>pommes</Name>
       <Carbs>22</Carbs>
       <Fat>4.2</Fat>
       <Protein>2.7</Protein>
-      <Grams>0</Grams>
     </Ingredient>
     <Ingredient>
-      <Name>Schnitzel</Name>
+      <Name>schnitzel</Name>
       <Carbs>21</Carbs>
       <Fat>4.8</Fat>
       <Protein>17</Protein>
-      <Grams>0</Grams>
     </Ingredient>
     <Ingredient>
-      <Name>Skagen röra</Name>
-      <Carbs>4.9</Carbs>
-      <Fat>43</Fat>
-      <Protein>3.8</Protein>
-      <Grams>70</Grams>
-    </Ingredient>
-    <Ingredient>
-      <Name>Smör</Name>
-      <Carbs>0.7</Carbs>
-      <Fat>82</Fat>
-      <Protein>0.6</Protein>
-      <Grams>30</Grams>
-    </Ingredient>
-    <Ingredient>
-      <Name>Sötsur sås</Name>
+      <Name>sötsur sås</Name>
       <Carbs>31</Carbs>
       <Fat>0</Fat>
       <Protein>0</Protein>
-      <Grams>0</Grams>
     </Ingredient>
   </AvailableIngredients>
 </MacroManager>

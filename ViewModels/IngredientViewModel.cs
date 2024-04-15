@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using SchacksMacroManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace SchacksMacroManager.ViewModels
 {
     public class IngredientViewModel : Screen
     {
-        public Ingredient Ingredient { get; set; }
+        public IngredientInstance Ingredient { get; set; }
         private string _name;
         public string Name
         {
@@ -48,11 +49,11 @@ namespace SchacksMacroManager.ViewModels
         }
         public EntryViewModel ParentVm { get; }
 
-        public IngredientViewModel(Ingredient ingredient, EntryViewModel parentVm)
+        public IngredientViewModel(IngredientInstance ingredient, EntryViewModel parentVm)
         {
             Ingredient = ingredient;
             Grams = Ingredient.Grams.ToString();
-            Name = ingredient.Name;
+            Name = ingredient.Ingredient.Name;
             ParentVm = parentVm;
         }
 
@@ -66,7 +67,7 @@ namespace SchacksMacroManager.ViewModels
         public void Delete()
         {
             ParentVm.Ingredients.Remove(this);
-            ParentVm.Entry.Ingredients.Remove(Ingredient);
+            ParentVm.Entry.IngredientInstances.Remove(Ingredient);
             ParentVm.Update();
         }
 

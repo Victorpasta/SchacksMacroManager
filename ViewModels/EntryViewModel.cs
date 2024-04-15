@@ -72,7 +72,7 @@ namespace SchacksMacroManager.ViewModels
             AvailableIngredients.ForEach(x => AvailableIngredientsNames.Add(x.Name));
             Entry = entry;
             Name = Entry.Name;
-            foreach (var ingredient in entry.Ingredients)
+            foreach (var ingredient in entry.IngredientInstances)
             {
                 AddIngredientVMFromIngredientInEntry(ingredient);
             }
@@ -84,14 +84,15 @@ namespace SchacksMacroManager.ViewModels
 
         public void AddNewIngredient()
         {
-            var vm = new IngredientViewModel(NextIngredient, this);
+            var ingredientIntance = new IngredientInstance(NextIngredient, 0);
+            var vm = new IngredientViewModel(ingredientIntance, this);
             vm.Grams = "";
             Ingredients.Add(vm);
-            Entry.Ingredients.Add(NextIngredient);
+            Entry.IngredientInstances.Add(ingredientIntance);
         }
-        private void AddIngredientVMFromIngredientInEntry(Ingredient ingredient)
+        private void AddIngredientVMFromIngredientInEntry(IngredientInstance ingredient)
         {
-            if (!Entry.Ingredients.Contains(ingredient))
+            if (!Entry.IngredientInstances.Contains(ingredient))
                 return;
             var vm = new IngredientViewModel(ingredient, this);
             vm.Grams = ingredient.Grams.ToString();
@@ -117,7 +118,7 @@ namespace SchacksMacroManager.ViewModels
                 ParentVm.Update();
         }
 
-        public void RemoveVmFromIngredient(List<Ingredient> ingredientsToRemove)
+        public void RemoveVmFromIngredient(List<IngredientInstance> ingredientsToRemove)
         {
             var vmsToRemove = new List<IngredientViewModel>();
             foreach (var vm in Ingredients)

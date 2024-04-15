@@ -9,22 +9,21 @@ namespace SchacksMacroManager.Models
     [Serializable]
     public class Entry
     {
-        public List<Ingredient> Ingredients { get; set; }
+        public List<IngredientInstance> IngredientInstances { get; set; }
         public string Name { get; set; }
         public double Carbs { get; set; }
         public double Fat { get; set; }
         public double Protein { get; set; }
         public double Kcal { get => Carbs*4 + Protein*4 + Fat*9; }
-        public Entry(List<Ingredient> ingredients, string name)
+        public Entry(List<IngredientInstance> ingredients, string name)
         {
             Name = name;
-            Ingredients = ingredients;
+            IngredientInstances = ingredients;
         }
 
         public Entry()
         {
-            Name="";
-            Ingredients=new List<Ingredient>();
+
         }
 
         public void CalculateMacros()
@@ -32,35 +31,35 @@ namespace SchacksMacroManager.Models
             Carbs = 0;
             Fat = 0;
             Protein = 0;
-            foreach (var ingredient in Ingredients)
+            foreach (var ingredient in IngredientInstances)
             {
                 var grams = ingredient.Grams;
-                Carbs += ingredient.Carbs * grams * 0.01;
-                Fat += ingredient.Fat * grams * 0.01;
-                Protein += ingredient.Protein * grams * 0.01;
+                Carbs += ingredient.Ingredient.Carbs * grams * 0.01;
+                Fat += ingredient.Ingredient.Fat * grams * 0.01;
+                Protein += ingredient.Ingredient.Protein * grams * 0.01;
             }
         }
 
-        public List<Ingredient> SyncIngredients(List<Ingredient> avaiableIngredients)
+        public List<IngredientInstance> SyncIngredients(List<Ingredient> avaiableIngredients)
         {
 
-            var ingredientsToRemove = new List<Ingredient>();
+            var ingredientsToRemove = new List<IngredientInstance>();
             if(avaiableIngredients == null)
                 return ingredientsToRemove;
-            foreach(var ingredient in Ingredients)
+            foreach(var ingredient in IngredientInstances)
             {
-                var matchingIngredient = avaiableIngredients.FirstOrDefault(ai => ai.Name == ingredient.Name);
+                var matchingIngredient = avaiableIngredients.FirstOrDefault(ai => ai.Name == ingredient.Ingredient.Name);
                 if(matchingIngredient == null)
                     ingredientsToRemove.Add(ingredient);
                 else
                 {
-                    ingredient.Carbs = matchingIngredient.Carbs;
-                    ingredient.Protein = matchingIngredient.Protein;
-                    ingredient.Fat = matchingIngredient.Fat;
+                    ingredient.Ingredient.Carbs = matchingIngredient.Carbs;
+                    ingredient.Ingredient.Protein = matchingIngredient.Protein;
+                    ingredient.Ingredient.Fat = matchingIngredient.Fat;
                 }
 
             }
-            ingredientsToRemove.ForEach(ingredient => Ingredients.Remove(ingredient));
+            ingredientsToRemove.ForEach(ingredient => IngredientInstances.Remove(ingredient));
             return ingredientsToRemove;
         }
 

@@ -57,11 +57,11 @@
     </Compile>
     <Compile Include="CaliburnBootstrapper.cs" />
     <Compile Include="DataReader.cs" />
-    <Compile Include="Dish.cs" />
     <Compile Include="Ingredient.cs" />
     <Compile Include="IngredientNames.cs" />
     <Compile Include="MacroManager.cs" />
     <Compile Include="Models\Entry.cs" />
+    <Compile Include="Models\IngredientInstance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\EntryViewModel.cs" />
     <Compile Include="ViewModels\IngredientViewModel.cs" />

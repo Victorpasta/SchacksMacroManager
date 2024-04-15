@@ -133,7 +133,7 @@ namespace SchacksMacroManager.ViewModels
 
         public void AddNewEntry()
         {
-            var entry = new Entry();
+            var entry = new Entry(new List<IngredientInstance>(), "");
             var vm = new EntryViewModel(entry, MacroManager, this);
             Entries.Add(vm);
         }

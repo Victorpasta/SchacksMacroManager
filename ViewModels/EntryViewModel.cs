@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SchacksMacroManager.ViewModels
 {
@@ -148,6 +149,13 @@ namespace SchacksMacroManager.ViewModels
             double proteinPer100Grams = Math.Round(Protein / n100Grams, 1);
             double fatPer100Grams = Math.Round(Fat / n100Grams, 1);
             var newIngredient = new Ingredient(Name, carbsPer100Grams, fatPer100Grams, proteinPer100Grams);
+            var result = MessageBox.Show("Create ingredient as one count?", "Use count?", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                newIngredient.UseCount = true;
+                newIngredient.GramsPerCount = totalGrams;
+            }
+
             ParentVm.MacroManager.AvailableIngredients.Add(newIngredient);
             ParentVm.SortAvailableIngredients();
             var newIngredientVm = new NewIngredientViewModel(newIngredient, ParentVm);

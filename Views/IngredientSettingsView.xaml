@@ -6,7 +6,9 @@
              xmlns:vm="clr-namespace:SchacksMacroManager.ViewModels"
              xmlns:local="clr-namespace:SchacksMacroManager.Views"
              Width="300"
-             Height="150"
+             Height="180"
+             WindowStartupLocation="CenterOwner"
+             Title="Ingredient Settings"
              xmlns:cal="http://www.caliburnproject.org" d:DataContext="{d:DesignInstance Type=vm:IngredientSettingsViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">

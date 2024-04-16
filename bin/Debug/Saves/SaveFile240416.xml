@@ -172,6 +172,38 @@
       <Fat>51.498000000000005</Fat>
       <Protein>58.464</Protein>
     </Entry>
+    <Entry>
+      <IngredientInstances>
+        <IngredientInstance>
+          <Count>1</Count>
+          <Grams>45</Grams>
+          <Ingredient>
+            <UseCount>true</UseCount>
+            <GramsPerCount>45</GramsPerCount>
+            <Name>ägg</Name>
+            <Carbs>1.1</Carbs>
+            <Fat>11</Fat>
+            <Protein>13</Protein>
+          </Ingredient>
+        </IngredientInstance>
+        <IngredientInstance>
+          <Count>0</Count>
+          <Grams>50</Grams>
+          <Ingredient>
+            <UseCount>false</UseCount>
+            <GramsPerCount>0</GramsPerCount>
+            <Name>Mild ost</Name>
+            <Carbs>2</Carbs>
+            <Fat>17</Fat>
+            <Protein>31.2</Protein>
+          </Ingredient>
+        </IngredientInstance>
+      </IngredientInstances>
+      <Name>t</Name>
+      <Carbs>1.495</Carbs>
+      <Fat>13.45</Fat>
+      <Protein>21.45</Protein>
+    </Entry>
   </Entries>
   <AvailableIngredients>
     <Ingredient>

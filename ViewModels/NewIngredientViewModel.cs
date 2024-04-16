@@ -176,5 +176,6 @@ namespace SchacksMacroManager.ViewModels
             else 
                 ParentVm.AvailableIngredientVms.Insert(index, addedNewIngredientVm);
         }
+
     }
 }

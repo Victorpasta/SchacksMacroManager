@@ -25,10 +25,10 @@ namespace SchacksMacroManager.ViewModels
                 }
             }
         }
-        public double Carbs { get => Entry.Carbs; }
-        public double Protein { get => Entry.Protein; }
-        public double Fat { get => Entry.Fat; }
-        public double Kcal { get => Entry.Kcal; }
+        public double Carbs { get => Math.Round(Entry.Carbs, 2); }
+        public double Protein { get => Math.Round(Entry.Protein,2); }
+        public double Fat { get => Math.Round(Entry.Fat, 2); }
+        public double Kcal { get => Math.Round(Entry.Kcal, 2); }
 
         public bool NewIngredientButtonEnabled { get => AvailableIngredientsNames.Contains(NextIngredientName); }
 
@@ -136,6 +136,26 @@ namespace SchacksMacroManager.ViewModels
         {
             ParentVm.Entries.Remove(this);
             ParentVm.Update();
+        }
+
+        public void MakeIngredient()
+        {
+            int totalGrams = 0;
+            foreach(var ingredient in Entry.IngredientInstances)
+                totalGrams += ingredient.Grams;
+            double n100Grams = totalGrams * 0.01;
+            double carbsPer100Grams = Math.Round(Carbs / n100Grams, 1);
+            double proteinPer100Grams = Math.Round(Protein / n100Grams, 1);
+            double fatPer100Grams = Math.Round(Fat / n100Grams, 1);
+            var newIngredient = new Ingredient(Name, carbsPer100Grams, fatPer100Grams, proteinPer100Grams);
+            ParentVm.MacroManager.AvailableIngredients.Add(newIngredient);
+            ParentVm.SortAvailableIngredients();
+            var newIngredientVm = new NewIngredientViewModel(newIngredient, ParentVm);
+            int index = ParentVm.MacroManager.AvailableIngredients.IndexOf(newIngredient);
+            if (index == ParentVm.MacroManager.AvailableIngredients.Count)
+                ParentVm.AvailableIngredientVms.Add(newIngredientVm);
+            else
+                ParentVm.AvailableIngredientVms.Insert(index, newIngredientVm);
         }
     }
 }

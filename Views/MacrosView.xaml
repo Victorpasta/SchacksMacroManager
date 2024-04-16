@@ -8,14 +8,14 @@
              Title="SchacksMacroManager"
              Height="800"
              MinWidth="700"
-             Width="1305"
+             Width="1505"
              xmlns:cal="http://www.caliburnproject.org" d:DataContext="{d:DesignInstance Type=vm:MacrosViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1300">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid>
 

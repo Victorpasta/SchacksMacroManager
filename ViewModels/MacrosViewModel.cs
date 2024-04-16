@@ -40,8 +40,12 @@ namespace SchacksMacroManager.ViewModels
         public string RemainingCarbs { get => CalculateRemainingCarbs(); }
         public string RemainingProtein { get => CalculateRemainingProtein(); }
         public string RemainingFat { get => CalculateRemainingFat(); }
-        public string RemainingKcal { get => (MacroManager.StringToDouble(RemainingCarbs) * 4 + MacroManager.StringToDouble(RemainingProtein) * 4 + MacroManager.StringToDouble(RemainingFat) * 9
-                ).ToString(); }
+        public string RemainingKcal { get => Math.Round(
+            (
+            MacroManager.StringToDouble(RemainingCarbs) * 4 
+            + MacroManager.StringToDouble(RemainingProtein) * 4 
+            + MacroManager.StringToDouble(RemainingFat) * 9
+            ),2).ToString(); }
 
         public List<Ingredient> AvailableIngredients;
         public BindableCollection<NewIngredientViewModel> AvailableIngredientVms { get; set; }
@@ -146,7 +150,7 @@ namespace SchacksMacroManager.ViewModels
             {
                 totalCarbs += entry.Carbs;
             }
-            return totalCarbs.ToString();
+            return Math.Round(totalCarbs,2).ToString();
         }
 
         private string CalculateTotalFat()
@@ -156,7 +160,7 @@ namespace SchacksMacroManager.ViewModels
             {
                 totalFat += entry.Fat;
             }
-            return totalFat.ToString();
+            return Math.Round(totalFat, 2).ToString();
         }
 
         private string CalculateTotalProtein()
@@ -166,7 +170,7 @@ namespace SchacksMacroManager.ViewModels
             {
                 totalProtein += entry.Protein;
             }
-            return totalProtein.ToString();
+            return Math.Round(totalProtein, 2).ToString();
         }
 
         private string CalculateRemainingCarbs()
@@ -174,21 +178,21 @@ namespace SchacksMacroManager.ViewModels
             var totalCarbs = double.Parse(TotCarbs);
             var dailyCarbs = double.Parse(DailyCarbs);
             var remainingCarbs = dailyCarbs - totalCarbs;
-            return remainingCarbs.ToString();
+            return Math.Round(remainingCarbs, 2).ToString();
         }
         private string CalculateRemainingProtein()
         {
             var totalProtein = double.Parse(TotProtein);
             var dailyProtein = double.Parse(DailyProtein);
             var remainingProtein = dailyProtein - totalProtein;
-            return remainingProtein.ToString();
+            return Math.Round(remainingProtein, 2).ToString();
         }
         private string CalculateRemainingFat()
         {
             var totalFat = double.Parse(TotFat);
             var dailyFat = double.Parse(DailyFat);
             var remainingFat = dailyFat - totalFat;
-            return remainingFat.ToString();
+            return Math.Round(remainingFat, 2).ToString();
         }
 
         public void Update()

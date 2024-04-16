@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchacksMacroManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,9 @@ namespace SchacksMacroManager
     [Serializable]
     public class Ingredient
     {
+
+        public bool UseCount { get; set; }
+        public double GramsPerCount { get; set; }
         public string Name { get; set; }
         public double Carbs { get; set; }
         public double Fat { get; set; }
@@ -32,5 +36,7 @@ namespace SchacksMacroManager
             var carbsKcal = Carbs * 4;
             return (int)((fatKcal + carbsKcal + protienKcal));
         }
+
+
     }
 }

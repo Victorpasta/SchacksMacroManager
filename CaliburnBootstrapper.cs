@@ -30,7 +30,7 @@ namespace SchacksMacroManager
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            _wm.ShowWindowAsync(new MacrosViewModel());
+            _wm.ShowWindowAsync(new MacrosViewModel(this));
         }
 
 

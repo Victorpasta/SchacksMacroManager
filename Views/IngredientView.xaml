@@ -21,7 +21,7 @@
         <Button Height="30" Width="30" Content="X" cal:Message.Attach="[Event Click] = [Action Delete]"/>
         <TextBox Grid.Row="0" Grid.Column="1" IsEnabled="False" Text="{Binding Name}" Margin="5"/>
         <Label Content="Name" Grid.Row="1" Grid.Column="1" FontSize="15" HorizontalAlignment="Center" Margin="0 -10 0 0"/>
-        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Grams, Mode=TwoWay}" Margin="5" cal:Message.Attach="[Event KeyUp] =[Action KeyHandlerFunction($eventArgs, $this)]"/>
-        <Label Content="Grams" Grid.Row="1" Grid.Column="2" FontSize="15" HorizontalAlignment="Center" Margin="0 -10 0 0"/>
+        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding GramsOrCount, Mode=TwoWay}"  Margin="5" cal:Message.Attach="[Event KeyUp] =[Action KeyHandlerFunction($eventArgs, $this)]"/>
+        <Label Content="{Binding GramsOrCountLabel}" Grid.Row="1" Grid.Column="2" FontSize="15" HorizontalAlignment="Center" Margin="0 -10 0 0"/>
     </Grid>
 </UserControl>

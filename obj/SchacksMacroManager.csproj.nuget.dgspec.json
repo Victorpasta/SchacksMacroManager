@@ -49,6 +49,10 @@
             "ExcelDataReader.DataSet": {
               "target": "Package",
               "version": "[3.6.0, )"
+            },
+            "FontAwesome.WPF": {
+              "target": "Package",
+              "version": "[4.7.0.9, )"
             }
           }
         }

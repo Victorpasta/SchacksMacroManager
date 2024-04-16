@@ -33,3 +33,6 @@ C:\Users\vicsch\source\personal\SchacksMacroManager\obj\Debug\App.baml
 C:\Users\vicsch\source\personal\SchacksMacroManager\obj\Debug\SchacksMacroManager_Content.g.cs
 C:\Users\vicsch\source\personal\SchacksMacroManager\obj\Debug\Views\NewIngredientView.g.cs
 C:\Users\vicsch\source\personal\SchacksMacroManager\obj\Debug\Views\NewIngredientView.baml
+C:\Users\vicsch\source\personal\SchacksMacroManager\bin\Debug\FontAwesome.WPF.dll
+C:\Users\vicsch\source\personal\SchacksMacroManager\obj\Debug\Views\IngredientSettingsView.g.cs
+C:\Users\vicsch\source\personal\SchacksMacroManager\obj\Debug\Views\IngredientSettingsView.baml

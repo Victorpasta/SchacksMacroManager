@@ -53,9 +53,11 @@ namespace SchacksMacroManager.Models
                     ingredientsToRemove.Add(ingredient);
                 else
                 {
-                    ingredient.Ingredient.Carbs = matchingIngredient.Carbs;
-                    ingredient.Ingredient.Protein = matchingIngredient.Protein;
-                    ingredient.Ingredient.Fat = matchingIngredient.Fat;
+                    ingredient.Ingredient = matchingIngredient;
+                    ingredient.UpdateCount();
+                    //ingredient.Ingredient.Carbs = matchingIngredient.Carbs;
+                    //ingredient.Ingredient.Protein = matchingIngredient.Protein;
+                    //ingredient.Ingredient.Fat = matchingIngredient.Fat;
                 }
 
             }

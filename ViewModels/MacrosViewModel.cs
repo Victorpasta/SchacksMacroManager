@@ -89,9 +89,10 @@ namespace SchacksMacroManager.ViewModels
                 }
             }
         }
-
-        public MacrosViewModel() 
+        public CaliburnBootstrapper Bootstrapper { get; set; }
+        public MacrosViewModel(CaliburnBootstrapper bootstrapper) 
         {
+            Bootstrapper = bootstrapper;
             DateTime today = DateTime.Now;
             AvailableIngredientVms = new BindableCollection<NewIngredientViewModel>();
             string formattedDate = today.ToString("yyMMdd");

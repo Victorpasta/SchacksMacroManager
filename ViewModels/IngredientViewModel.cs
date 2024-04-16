@@ -12,6 +12,7 @@ namespace SchacksMacroManager.ViewModels
 {
     public class IngredientViewModel : Screen
     {
+        public string GramsOrCountLabel { get => Ingredient.Ingredient.UseCount ? "Count" : "Grams"; }
         public IngredientInstance Ingredient { get; set; }
         private string _name;
         public string Name
@@ -27,14 +28,14 @@ namespace SchacksMacroManager.ViewModels
             }
         }
 
-        private string _grams;
-        public string Grams
+        private string _gramsOrCount;
+        public string GramsOrCount
         {
-            get => _grams;
+            get => _gramsOrCount;
             set
             {
                 int numericalValue;
-                _grams = value;
+                _gramsOrCount = value;
                 try
                 {
                     numericalValue = int.Parse(value);
@@ -43,8 +44,17 @@ namespace SchacksMacroManager.ViewModels
                 {
                     numericalValue = 0;
                 }
-                Ingredient.Grams = numericalValue;
-                NotifyOfPropertyChange(() => Grams);
+                if (Ingredient.Ingredient.UseCount)
+                {
+                    Ingredient.Count = numericalValue;
+                    Ingredient.Grams = (int)(numericalValue * Ingredient.Ingredient.GramsPerCount);
+                }
+                else
+                {
+                    Ingredient.Grams = numericalValue;
+                    Ingredient.UpdateCount();
+                }
+                
             }
         }
         public EntryViewModel ParentVm { get; }
@@ -52,15 +62,32 @@ namespace SchacksMacroManager.ViewModels
         public IngredientViewModel(IngredientInstance ingredient, EntryViewModel parentVm)
         {
             Ingredient = ingredient;
-            Grams = Ingredient.Grams.ToString();
+            GramsOrCount = Ingredient.Ingredient.UseCount ? Ingredient.Count.ToString() : Ingredient.Grams.ToString();
             Name = ingredient.Ingredient.Name;
             ParentVm = parentVm;
         }
 
         public void KeyHandlerFunction(KeyEventArgs keyArgs, string s)
         {
-            string output = Regex.Replace(s, "[^0-9]", "");
-            Grams = output;
+            string output = s;
+            if (keyArgs.Key == Key.Up || keyArgs.Key == Key.Down)
+            {
+                int value;
+                var key = keyArgs.Key;
+                try
+                {
+                    value = int.Parse(output);
+                } catch
+                {
+                    value = 0;
+                }
+                value = key == Key.Up ? value + 1 : value - 1;
+                if(value < 1)
+                    value = 1;
+                output = value.ToString();
+            }
+            output = Regex.Replace(output, "[^0-9]", "");
+            GramsOrCount = output;
             ParentVm.Update();
         }
 
@@ -69,6 +96,13 @@ namespace SchacksMacroManager.ViewModels
             ParentVm.Ingredients.Remove(this);
             ParentVm.Entry.IngredientInstances.Remove(Ingredient);
             ParentVm.Update();
+        }
+
+        public void Update()
+        {
+            GramsOrCount = Ingredient.Ingredient.UseCount ? Ingredient.Count.ToString() : Ingredient.Grams.ToString();
+            NotifyOfPropertyChange(() => GramsOrCount);
+            NotifyOfPropertyChange(() => GramsOrCountLabel);
         }
 
     }

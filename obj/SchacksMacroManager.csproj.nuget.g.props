@@ -14,5 +14,6 @@
   </ItemGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_Xaml_Behaviors_Wpf Condition=" '$(PkgMicrosoft_Xaml_Behaviors_Wpf)' == '' ">C:\Users\vicsch\.nuget\packages\microsoft.xaml.behaviors.wpf\1.1.19</PkgMicrosoft_Xaml_Behaviors_Wpf>
+    <PkgFontAwesome_WPF Condition=" '$(PkgFontAwesome_WPF)' == '' ">C:\Users\vicsch\.nuget\packages\fontawesome.wpf\4.7.0.9</PkgFontAwesome_WPF>
   </PropertyGroup>
 </Project>

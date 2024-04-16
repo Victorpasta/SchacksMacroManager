@@ -6,12 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SchacksMacroManager.ViewModels
 {
     public class NewIngredientViewModel : Screen
     {
+        public Visibility SettingsButtonVisibility { get; }
+
         public bool NewIngredientButtonEnabled { get => Name != string.Empty && Name != null; }
 
         public int NameTextBoxMaxWidth { get => IsNew ? 99999 : 125; }
@@ -87,10 +90,13 @@ namespace SchacksMacroManager.ViewModels
             ParentVm = parentVm;
             ButtonCharacter = "+";
             Ingredient = new Ingredient();
+            SettingsButtonVisibility = Visibility.Collapsed;
+
         }
 
         public NewIngredientViewModel(Ingredient ingredient, MacrosViewModel parentVm)
         {
+            SettingsButtonVisibility = Visibility.Visible;
             ParentVm = parentVm;
             Ingredient = ingredient;
             Carbs = Ingredient.Carbs.ToString();
@@ -151,6 +157,13 @@ namespace SchacksMacroManager.ViewModels
                 Fat = "";
             }
             Update();
+        }
+
+        public void OpenSettings()
+        {
+            var bootstrapper = ParentVm.Bootstrapper;
+            var vm = new IngredientSettingsViewModel(Ingredient, ParentVm);
+            bootstrapper.ShowDialog(vm);
         }
         private void AddIngredientAlphabetically()
         {

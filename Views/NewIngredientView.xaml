@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SchacksMacroManager.Views"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:vm="clr-namespace:SchacksMacroManager.ViewModels"
              xmlns:cal="http://www.caliburnproject.org" d:DataContext="{d:DesignInstance Type=vm:NewIngredientViewModel}"
              mc:Ignorable="d" 
@@ -20,6 +21,9 @@
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
+        <Button Height="30" Width="30" Visibility="{Binding SettingsButtonVisibility}" IsEnabled="True" HorizontalAlignment="Left" cal:Message.Attach="[Event Click] = [Action OpenSettings]">
+            <fa:ImageAwesome Icon="Cog" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Width="15" Height="15"/>
+        </Button>
         <Button Height="30" Width="30" IsEnabled="{Binding NewIngredientButtonEnabled}" HorizontalAlignment="Right" Content="{Binding ButtonCharacter}" cal:Message.Attach="[Event Click] = [Action DeleteOrAddNew]"/>
         <TextBox Grid.Row="0" Grid.Column="1" IsEnabled="{Binding IsNew}" Text="{Binding Name}" MinWidth="{Binding NameTextBoxMaxWidth}" MaxWidth="{Binding NameTextBoxMaxWidth}" Margin="5" cal:Message.Attach="[Event KeyUp] =[Action IngredientKeyHandlerFunction($eventArgs, $this, -1)]"/>
         <Label Content="Name" Grid.Row="1" Grid.Column="1" FontSize="15" HorizontalAlignment="Center" Margin="0 -10 0 0"/>

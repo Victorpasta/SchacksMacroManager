@@ -86,7 +86,7 @@ namespace SchacksMacroManager.ViewModels
         {
             var ingredientIntance = new IngredientInstance(NextIngredient, 0);
             var vm = new IngredientViewModel(ingredientIntance, this);
-            vm.Grams = "";
+            vm.GramsOrCount = "";
             Ingredients.Add(vm);
             Entry.IngredientInstances.Add(ingredientIntance);
         }
@@ -95,7 +95,7 @@ namespace SchacksMacroManager.ViewModels
             if (!Entry.IngredientInstances.Contains(ingredient))
                 return;
             var vm = new IngredientViewModel(ingredient, this);
-            vm.Grams = ingredient.Grams.ToString();
+            vm.GramsOrCount = ingredient.Ingredient.UseCount ? ingredient.Count.ToString() : ingredient.Grams.ToString();
             Ingredients.Add(vm);
         }
 
@@ -114,6 +114,10 @@ namespace SchacksMacroManager.ViewModels
             NotifyOfPropertyChange(() => Protein);
             NotifyOfPropertyChange(() => Fat);
             NotifyOfPropertyChange(() => Kcal);
+            foreach(var vm in Ingredients)
+            {
+                vm.Update();
+            }
             if (updateParent)
                 ParentVm.Update();
         }

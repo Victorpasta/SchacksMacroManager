@@ -7,21 +7,23 @@
              xmlns:vm="clr-namespace:SchacksMacroManager.ViewModels"
              xmlns:cal="http://www.caliburnproject.org" d:DataContext="{d:DesignInstance Type=vm:IngredientViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="75" d:DesignWidth="800">
+             d:DesignHeight="75" d:DesignWidth="600">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="7*"/>
-            <ColumnDefinition Width="7*"/>
-        </Grid.ColumnDefinitions>
-        <Button Height="30" Width="30" Content="X" cal:Message.Attach="[Event Click] = [Action Delete]"/>
-        <TextBox Grid.Row="0" Grid.Column="1" IsEnabled="False" Text="{Binding Name}" Margin="5"/>
-        <Label Content="Name" Grid.Row="1" Grid.Column="1" FontSize="15" HorizontalAlignment="Center" Margin="0 -10 0 0"/>
-        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding GramsOrCount, Mode=TwoWay}"  Margin="5" cal:Message.Attach="[Event KeyUp] =[Action KeyHandlerFunction($eventArgs, $this)]"/>
-        <Label Content="{Binding GramsOrCountLabel}" Grid.Row="1" Grid.Column="2" FontSize="15" HorizontalAlignment="Center" Margin="0 -10 0 0"/>
+        
+        <StackPanel Orientation="Horizontal">
+            <Button Height="30" Width="30" Content="X" Margin="5" cal:Message.Attach="[Event Click] = [Action Delete]"/>
+
+            <StackPanel Grid.Column="1" Width="245" Margin="5 0 5 0" Orientation="Vertical" VerticalAlignment="Bottom">
+                <TextBox Height="20" IsEnabled="False" Text="{Binding Name}" VerticalAlignment="Center" Margin="0"/>
+                <Label Content="Name" FontSize="15" HorizontalAlignment="Center" Margin="0 -8 0 0"/>
+
+            </StackPanel>
+            <StackPanel Grid.Column="3" Orientation="Vertical" VerticalAlignment="Bottom">
+                <TextBox Width="90" Height="20" Text="{Binding GramsOrCount, Mode=TwoWay}" Margin="5 0 5 0" cal:Message.Attach="[Event KeyUp] =[Action KeyHandlerFunction($eventArgs, $this)]"/>
+                <Label Content="{Binding GramsOrCountLabel}" FontSize="15" HorizontalAlignment="Center" Margin="0 -8 0 0"/>
+
+            </StackPanel>
+        </StackPanel>
+            
     </Grid>
 </UserControl>

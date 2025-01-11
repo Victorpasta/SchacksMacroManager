@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:local="clr-namespace:SchacksMacroManager.Views"
              xmlns:vm="clr-namespace:SchacksMacroManager.ViewModels"
              Title="SchacksMacroManager"
@@ -14,32 +15,36 @@
              d:DesignHeight="800" d:DesignWidth="1300">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="700"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="170"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="100"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderThickness="1" BorderBrush="Gray">
             <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="170"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="1" Grid.Column="0" FontSize="30" HorizontalAlignment="Center" Content="Total:"/>
-                <Label Foreground="{Binding TextColor}" Grid.Row="2" Grid.Column="0" FontSize="30" HorizontalAlignment="Center" Content="Remaining:"/>
+                <Label Grid.Row="1" Grid.Column="0" FontSize="25" HorizontalAlignment="Center" Content="Total:"/>
+                <Label Foreground="{Binding TextColor}" Grid.Row="2" Grid.Column="0" FontSize="25" HorizontalAlignment="Center" Content="Remaining:"/>
+                <Label Grid.Row="3" Grid.Column="0" Margin="0 0 0 0" FontSize="25" HorizontalAlignment="Center" Content="Daily Macros:"/>
                 <Label Grid.Row="0" FontSize="15" Grid.Column="1" Content="Carbs" HorizontalAlignment="Center"/>
                 <TextBox Grid.Row="1" Grid.Column="1" FontSize="30" IsEnabled="False" Text="{Binding TotCarbs, Mode=OneWay}"/>
                 <Label Grid.Row="0" FontSize="15" Grid.Column="2" Content="Protein" HorizontalAlignment="Center"/>
@@ -52,7 +57,13 @@
                 <TextBox Grid.Row="2" Grid.Column="3" FontSize="30" IsEnabled="False" Text="{Binding RemainingFat, Mode=OneWay}"/>
                 <TextBox Grid.Row="1" Grid.Column="4" FontSize="30" IsEnabled="False" Text="{Binding TotKcal, Mode=OneWay}"/>
                 <TextBox Grid.Row="2" Grid.Column="4" FontSize="30" IsEnabled="False" Text="{Binding RemainingKcal, Mode=OneWay}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" FontSize="30" Text="{Binding DailyCarbs, Mode=TwoWay}" cal:Message.Attach="[Event KeyUp] =[Action KeyHandlerFunction($eventArgs, $this, 1)]"/>
+                <TextBox Grid.Row="3" Grid.Column="2" FontSize="30" Text="{Binding DailyProtein, Mode=TwoWay}" cal:Message.Attach="[Event KeyUp] =[Action KeyHandlerFunction($eventArgs, $this, 2)]"/>
+                <TextBox Grid.Row="3" Grid.Column="3" FontSize="30" Text="{Binding DailyFat, Mode=TwoWay}" cal:Message.Attach="[Event KeyUp] =[Action KeyHandlerFunction($eventArgs, $this, 3)]"/>
+                <TextBox Grid.Row="3" Grid.Column="4" FontSize="30" IsEnabled="False" Text="{Binding DailyKcal, Mode=OneWay}"/>
+
             </Grid>
+            </Border>
             <Grid Grid.Row="1">
                 <ListView ItemsSource="{Binding Entries}" ScrollViewer.CanContentScroll="True" HorizontalContentAlignment="Stretch">
                     <ListView.ItemTemplate>
@@ -62,31 +73,8 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
-            <Grid Grid.Row="2" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="170"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Row="2" Grid.Column="0" FontSize="25" HorizontalAlignment="Center" Content="Daily Macros:"/>
-                <Label Grid.Row="0" FontSize="15" Grid.Column="1" Content="Carbs" HorizontalAlignment="Center"/>
-                <TextBox Grid.Row="1" Grid.Column="1" FontSize="30" Text="{Binding DailyCarbs, Mode=TwoWay}" cal:Message.Attach="[Event KeyUp] =[Action KeyHandlerFunction($eventArgs, $this, 1)]"/>
-                <Label Grid.Row="0" FontSize="15" Grid.Column="2" Content="Protein" HorizontalAlignment="Center"/>
-                <TextBox Grid.Row="1" Grid.Column="2" FontSize="30" Text="{Binding DailyProtein, Mode=TwoWay}" cal:Message.Attach="[Event KeyUp] =[Action KeyHandlerFunction($eventArgs, $this, 2)]"/>
-                <Label Grid.Row="0" FontSize="15" Grid.Column="3" Content="Fat" HorizontalAlignment="Center"/>
-                <TextBox Grid.Row="1" Grid.Column="3" FontSize="30" Text="{Binding DailyFat, Mode=TwoWay}" cal:Message.Attach="[Event KeyUp] =[Action KeyHandlerFunction($eventArgs, $this, 3)]"/>
-                <Label Grid.Row="0" FontSize="15" Grid.Column="4" Content="Kcal" HorizontalAlignment="Center"/>
-                <TextBox Grid.Row="1" Grid.Column="4" FontSize="30" IsEnabled="False" Text="{Binding DailyKcal, Mode=OneWay}"/>
 
-            </Grid>
-
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -98,7 +86,29 @@
 
             </Grid>
         </Grid>
-        <Grid Grid.Column ="1">
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border BorderThickness="1" BorderBrush="Black">
+                <Grid>
+                    
+                    <Label Margin="5 0 0 0" HorizontalAlignment="Left" Content="Users" FontSize="30"/>
+                    <Button Margin="0 0 5 0" Width="50" Height="50" HorizontalAlignment="Right" Cursor="Hand" cal:Message.Attach="[Event Click] = [Action AddNewUserVm()]">
+                        <fa:ImageAwesome Icon="UserPlus" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Width="50" Height="50"/>
+                    </Button>
+                </Grid>
+            </Border>
+            <ListView Grid.Row="1" ItemsSource="{Binding Users}" ScrollViewer.CanContentScroll="True" HorizontalContentAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:UserView/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Grid.Column ="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>

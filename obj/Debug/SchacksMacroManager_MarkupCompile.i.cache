@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\vicsch\source\personal\SchacksMacroManager\App.xaml
-5-1773867984
+6843953654
 2239846665
-201526742466
+231731056181
 241558290336
-Views\EntryView.xaml;Views\IngredientSettingsView.xaml;Views\IngredientView.xaml;Views\MacrosView.xaml;Views\NewIngredientView.xaml;
+Views\EntryView.xaml;Views\IngredientSettingsView.xaml;Views\IngredientView.xaml;Views\MacrosView.xaml;Views\NewIngredientView.xaml;Views\UserView.xaml;
 
-True
+False
 

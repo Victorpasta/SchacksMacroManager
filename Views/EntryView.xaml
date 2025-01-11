@@ -9,35 +9,35 @@
              xmlns:vm="clr-namespace:SchacksMacroManager.ViewModels"
              xmlns:cal="http://www.caliburnproject.org" d:DataContext="{d:DesignInstance Type=vm:EntryViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="800">
+             d:DesignHeight="125" d:DesignWidth="600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="40"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Row="1" Height="30" Width="30" Margin="5" Content="X" cal:Message.Attach="[Event Click] = [Action Delete]"/>
         <Label Grid.Row="0" FontSize="15" Grid.Column="1" Content="Name" HorizontalAlignment="Center"/>
         <TextBox Grid.Row="1" Grid.Column="1" FontSize="30" Text="{Binding Name}"/>
         <Label Grid.Row="0" FontSize="15" Grid.Column="2" Content="Carbs" HorizontalAlignment="Center"/>
-        <TextBox Grid.Row="1" Grid.Column="2" FontSize="30" IsEnabled="False" Text="{Binding Carbs, Mode=OneWay}"/>
+        <TextBox Grid.Row="1" Grid.Column="2" FontSize="30" IsEnabled="False" HorizontalContentAlignment="Center" Text="{Binding Carbs, Mode=OneWay}"/>
         <Label Grid.Row="0" FontSize="15" Grid.Column="3" Content="Protein" HorizontalAlignment="Center"/>
-        <TextBox Grid.Row="1" Grid.Column="3" FontSize="30" IsEnabled="False" Text="{Binding Protein, Mode=OneWay}"/>
+        <TextBox Grid.Row="1" Grid.Column="3" FontSize="30" IsEnabled="False" HorizontalContentAlignment="Center" Text="{Binding Protein, Mode=OneWay}"/>
         <Label Grid.Row="0" FontSize="15" Grid.Column="4" Content="Fat" HorizontalAlignment="Center"/>
-        <TextBox Grid.Row="1" Grid.Column="4" FontSize="30" IsEnabled="False" Text="{Binding Fat, Mode=OneWay}"/>
+        <TextBox Grid.Row="1" Grid.Column="4" FontSize="30" IsEnabled="False" HorizontalContentAlignment="Center" Text="{Binding Fat, Mode=OneWay}"/>
         <Label Grid.Row="0" FontSize="15" Grid.Column="5" Content="Kcal" HorizontalAlignment="Center"/>
-        <TextBox Grid.Row="1" Grid.Column="5" FontSize="30" IsEnabled="False" Text="{Binding Kcal, Mode=OneWay}"/>
-        <Button Grid.Column="6" Grid.Row="1" Height="30" Width="30" Margin="5" cal:Message.Attach="[Event Click] = [Action MakeIngredient]" ToolTip="Make an ingredient out of this entry.">
+        <TextBox Grid.Row="1" Grid.Column="5" FontSize="30" IsEnabled="False" HorizontalContentAlignment="Center" Text="{Binding Kcal, Mode=OneWay}"/>
+        <Button Grid.Column="6" Grid.Row="1" Height="30" Width="30" IsEnabled="{Binding CanCreateIngredient}" Margin="5" cal:Message.Attach="[Event Click] = [Action MakeIngredient]" ToolTip="Make an ingredient out of this entry.">
             <fa:ImageAwesome Icon="Cutlery" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Width="15" Height="15"/>
         </Button>
         <Grid Grid.ColumnSpan="5" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch">
@@ -49,7 +49,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
+        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="*"/>

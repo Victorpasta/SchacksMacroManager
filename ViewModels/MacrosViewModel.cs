@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Win32;
+using System.Security.Permissions;
 
 namespace SchacksMacroManager.ViewModels
 {
@@ -29,26 +30,32 @@ namespace SchacksMacroManager.ViewModels
 
         public string TotKcal
         {
-            get => (MacroManager.StringToDouble(TotCarbs) * 4 + MacroManager.StringToDouble(TotProtein) * 4 + MacroManager.StringToDouble(TotFat) * 9
-                ).ToString();
+            get => Math.Round(
+            (MacroManager.StringToDouble(TotCarbs) * 4 + MacroManager.StringToDouble(TotProtein) * 4 + MacroManager.StringToDouble(TotFat) * 9
+                ), 0).ToString();
         }
         public string DailyKcal
         {
-            get => (MacroManager.StringToDouble(DailyCarbs) * 4 + MacroManager.StringToDouble(DailyProtein) * 4 + MacroManager.StringToDouble(DailyFat) * 9
-                ).ToString();
+            get => Math.Round(
+            (MacroManager.StringToDouble(DailyCarbs) * 4 + MacroManager.StringToDouble(DailyProtein) * 4 + MacroManager.StringToDouble(DailyFat) * 9
+                ), 0).ToString();
         }
         public string RemainingCarbs { get => CalculateRemainingCarbs(); }
         public string RemainingProtein { get => CalculateRemainingProtein(); }
         public string RemainingFat { get => CalculateRemainingFat(); }
-        public string RemainingKcal { get => Math.Round(
+        public string RemainingKcal
+        {
+            get => Math.Round(
             (
-            MacroManager.StringToDouble(RemainingCarbs) * 4 
-            + MacroManager.StringToDouble(RemainingProtein) * 4 
+            MacroManager.StringToDouble(RemainingCarbs) * 4
+            + MacroManager.StringToDouble(RemainingProtein) * 4
             + MacroManager.StringToDouble(RemainingFat) * 9
-            ),2).ToString(); }
+            ), 0).ToString();
+        }
 
         public List<Ingredient> AvailableIngredients;
         public BindableCollection<NewIngredientViewModel> AvailableIngredientVms { get; set; }
+        public BindableCollection<UserViewModel> Users { get; set; }
 
         public NewIngredientViewModel NextNewIngredient { get; set; }
         public BindableCollection<EntryViewModel> Entries { get; set; }
@@ -62,6 +69,7 @@ namespace SchacksMacroManager.ViewModels
                 {
                     _dailyCarbs = value;
                     NotifyOfPropertyChange(() => DailyCarbs);
+                    MacroManager.ActiveUser.DailyCarbs = value;
                 }
             }
         }
@@ -76,6 +84,8 @@ namespace SchacksMacroManager.ViewModels
                 {
                     _dailyProtein = value;
                     NotifyOfPropertyChange(() => DailyProtein);
+                    MacroManager.ActiveUser.DailyProtein = value;
+
                 }
             }
         }
@@ -90,32 +100,38 @@ namespace SchacksMacroManager.ViewModels
                 {
                     _dailyFat = value;
                     NotifyOfPropertyChange(() => DailyFat);
+                    MacroManager.ActiveUser.DailyFat = value;
+
                 }
             }
         }
         public CaliburnBootstrapper Bootstrapper { get; set; }
-        public MacrosViewModel(CaliburnBootstrapper bootstrapper) 
+        public MacrosViewModel(CaliburnBootstrapper bootstrapper)
         {
             Bootstrapper = bootstrapper;
             DateTime today = DateTime.Now;
             AvailableIngredientVms = new BindableCollection<NewIngredientViewModel>();
+            Users = new BindableCollection<UserViewModel>();
             string formattedDate = today.ToString("yyMMdd");
             var saveFile = Directory.GetCurrentDirectory() + "\\Saves\\SaveFile" + formattedDate + ".xml";
             Entries = new BindableCollection<EntryViewModel>();
             MacroManager macroManager;
             _filePath = saveFile;
+
             if (File.Exists(saveFile))
             {
                 macroManager = MacroManager.DeserializeMacroManager(saveFile);
                 var entries = macroManager.Entries;
                 var availableIngredients = macroManager.AvailableIngredients;
-                if(availableIngredients == null || availableIngredients.Count < 1)
+                if (availableIngredients == null || availableIngredients.Count < 1)
                 {
                     InitializeFromPreviousDays();
                     macroManager.SerializeMacroManager(saveFile);
                 }
                 MacroManager = macroManager;
                 SortAvailableIngredients();
+                if (MacroManager.Users.Count < 1)
+                    MacroManager.ActiveUser = AddNewUser();
                 Load();
             }
             else
@@ -127,13 +143,69 @@ namespace SchacksMacroManager.ViewModels
                 MacroManager = macroManager;
                 Save();
             }
-            if(AvailableIngredients.Count > 0)
+
+            if (AvailableIngredients.Count > 0)
                 AvailableIngredients.ForEach(ai => AvailableIngredientVms.Add(new NewIngredientViewModel(ai, this)));
+            MacroManager.Users.ForEach(u => AddNewUserVm(u));
             NextNewIngredient = new NewIngredientViewModel(this);
-            //_saveTimer = new Timer(5000); // Set the interval to 5000 milliseconds (5 seconds)
-            //_saveTimer.Elapsed += OnTimedSave; // Subscribe to the Elapsed event
-            //_saveTimer.AutoReset = true; // Ensures the timer resets and ticks again
-            //_saveTimer.Enabled = true; // Start the timer
+            var activeUser = Users.FirstOrDefault(u => MacroManager.ActiveUser.Name.Equals(u.User.Name)) ?? Users.First();
+            activeUser.IsActive = true;
+
+        }
+        public User AddNewUser()
+        {
+            var newUser = new User(GetNextAvailableUserName());
+            MacroManager.Users.Add(newUser);
+            return newUser;
+        }
+
+        private string GetNextAvailableUserName()
+        {
+            int i = 1;
+            bool foundNext = false;
+            string nextAvailableUserName = "";
+            while (!foundNext)
+            {
+                nextAvailableUserName = $"User{i}";
+                foundNext = !Users.Any(u => u.Name == nextAvailableUserName);
+                i++;
+            }
+            return nextAvailableUserName;
+        }
+
+        public void AddNewUserVm(User user)
+        {
+            var vm = new UserViewModel(user);
+            vm.OnActiveUserChanged += ActiveUserChanged;
+            vm.OnUserRemoved += OnUserRemoved;
+            Users.Add(vm);
+        }
+
+        private void OnUserRemoved(UserViewModel sender)
+        {
+            var index = Users.IndexOf(sender);
+            if (Users.Count == index + 1)
+                index--;
+            MacroManager.Users.Remove(sender.User);
+            Users.Remove(sender);
+            if (sender.IsActive && index != -1)
+                Users[index].IsActive = true;
+        }
+
+        public void AddNewUserVm() => AddNewUserVm(AddNewUser());
+
+        public void ActiveUserChanged(UserViewModel sender)
+        {
+            foreach (var user in Users.Where(u => u != sender))
+                user.IsActive = false;
+            var entries = new List<Entry>();
+            foreach(var entryVm in Entries)
+                entries.Add(entryVm.Entry);
+            MacroManager.Entries = entries;
+            MacroManager.ActiveUser = sender.User;
+
+            Load();
+            NotifyAll();
         }
 
         public void AddNewEntry()
@@ -150,7 +222,7 @@ namespace SchacksMacroManager.ViewModels
             {
                 totalCarbs += entry.Carbs;
             }
-            return Math.Round(totalCarbs,2).ToString();
+            return Math.Round(totalCarbs, 2).ToString();
         }
 
         private string CalculateTotalFat()
@@ -217,6 +289,8 @@ namespace SchacksMacroManager.ViewModels
             NotifyOfPropertyChange(() => RemainingKcal);
             NotifyOfPropertyChange(() => RemainingProtein);
             NotifyOfPropertyChange(() => RemainingFat);
+            NotifyOfPropertyChange(() => Users);
+
             NotifyOfPropertyChange(() => TextColor);
         }
 
@@ -224,7 +298,7 @@ namespace SchacksMacroManager.ViewModels
         public void KeyHandlerFunction(KeyEventArgs keyArgs, string s, int macro)
         {
             string output = Regex.Replace(s, "[^0-9]", "");
-            if(macro == 1)
+            if (macro == 1)
                 DailyCarbs = output;
             if (macro == 2)
                 DailyProtein = output;
@@ -241,9 +315,9 @@ namespace SchacksMacroManager.ViewModels
                 entries.Add(entryVM.Entry);
             MacroManager.Entries = entries;
             MacroManager.AvailableIngredients = AvailableIngredients;
-            MacroManager.DailyCarbs = DailyCarbs;
-            MacroManager.DailyProtein = DailyProtein;
-            MacroManager.DailyFat = DailyFat;
+            MacroManager.ActiveUser.DailyCarbs = DailyCarbs;
+            MacroManager.ActiveUser.DailyProtein = DailyProtein;
+            MacroManager.ActiveUser.DailyFat = DailyFat;
             MacroManager.SerializeMacroManager(_filePath);
         }
 
@@ -251,18 +325,17 @@ namespace SchacksMacroManager.ViewModels
         {
             Entries.Clear();
             var entries = MacroManager.Entries;
-            var availableIngredients = MacroManager.AvailableIngredients;
+            AvailableIngredients = MacroManager.AvailableIngredients;
             foreach (var entry in entries)
                 Entries.Add(new EntryViewModel(entry, MacroManager, this));
-            AvailableIngredients = availableIngredients;
-            SetDailyValuesFromMacroManager();
+            SetDailyValuesFromActiveUser();
         }
 
         private void InitializeFromPreviousDays()
         {
             List<string> fileDates = new List<string>();
             var saveFolder = Path.GetDirectoryName(_filePath);
-            if(Directory.GetFiles(saveFolder).Count() < 1)
+            if (Directory.GetFiles(saveFolder).Count() < 1)
             {
                 DailyCarbs = "450";
                 DailyProtein = "200";
@@ -274,20 +347,20 @@ namespace SchacksMacroManager.ViewModels
             }
             var newsetFile = GetMostRecentFilePath(saveFolder);
             MacroManager macroManager = MacroManager.DeserializeMacroManager(newsetFile);
-            SetDailyValuesFromMacroManager(macroManager);
+            SetDailyValuesFromActiveUser(macroManager);
             SetAvailableIngredientsFromMacroManager(macroManager);
             MacroManager = macroManager;
             Save();
         }
 
 
-        private void SetDailyValuesFromMacroManager(MacroManager macroManager = null)
+        private void SetDailyValuesFromActiveUser(MacroManager macroManager = null)
         {
             if (macroManager == null)
                 macroManager = MacroManager;
-            DailyCarbs = macroManager.DailyCarbs;
-            DailyProtein = macroManager.DailyProtein;
-            DailyFat = macroManager.DailyFat;
+            DailyCarbs = macroManager.ActiveUser.DailyCarbs;
+            DailyProtein = macroManager.ActiveUser.DailyProtein;
+            DailyFat = macroManager.ActiveUser.DailyFat;
 
         }
 
@@ -314,7 +387,8 @@ namespace SchacksMacroManager.ViewModels
                 var dailyCalories = double.Parse(DailyCarbs) * 4 + double.Parse(DailyProtein) * 4 + double.Parse(DailyFat) * 9;
                 var totalCalories = double.Parse(TotCarbs) * 4 + double.Parse(TotProtein) * 4 + double.Parse(TotFat) * 9;
                 isOver = dailyCalories <= totalCalories && double.Parse(DailyProtein) <= double.Parse(TotProtein);
-            } catch { isOver = false; }
+            }
+            catch { isOver = false; }
             return isOver ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Black);
         }
 
@@ -332,10 +406,14 @@ namespace SchacksMacroManager.ViewModels
                 {
                     fileToLoad = fileDiag.FileName; // Return the selected file path
                     MacroManager = MacroManager.DeserializeMacroManager(fileToLoad);
+                    if (MacroManager.Users.Count < 1)
+                        MacroManager.ActiveUser = AddNewUser();
                 }
+                NotifyAll();
                 Load();
-            } catch { }
-            
+            }
+            catch { }
+
         }
 
         public void SortAvailableIngredients()

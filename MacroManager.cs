@@ -12,10 +12,21 @@ namespace SchacksMacroManager
     [Serializable]
     public class MacroManager
     {
-        public string DailyCarbs { get; set; }
-        public string DailyProtein { get; set; }
-        public string DailyFat { get; set; }
-        public List<Entry> Entries { get; set; }
+       
+        public List<User> Users { get; set; }
+        public User ActiveUser { get; set; }
+        public List<Entry> Entries 
+        { 
+            get 
+            {
+
+                return ActiveUser?.Entries ?? new List<Entry>();
+            } 
+            set 
+            {
+                ActiveUser.Entries = value;
+            } 
+        }
 
         public List<Ingredient> AvailableIngredients { get; set; }
         public void SerializeMacroManager(string filePath)

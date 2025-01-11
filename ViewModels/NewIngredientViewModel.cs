@@ -15,7 +15,7 @@ namespace SchacksMacroManager.ViewModels
     {
         public Visibility SettingsButtonVisibility { get; }
 
-        public bool NewIngredientButtonEnabled { get => Name != string.Empty && Name != null; }
+        public bool NewIngredientButtonEnabled { get => NewIngredientButtonIsEnabled(); }
 
         public int NameTextBoxMaxWidth { get => IsNew ? 99999 : 125; }
         public string ButtonCharacter { get;}
@@ -36,7 +36,13 @@ namespace SchacksMacroManager.ViewModels
                 }
             }
         }
-
+        
+        private bool NewIngredientButtonIsEnabled()
+        {
+            if(!IsNew)
+                return true;
+            return !string.IsNullOrEmpty(Name);
+        }
         private string _carbs;
         public string Carbs
         {

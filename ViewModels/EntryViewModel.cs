@@ -26,10 +26,11 @@ namespace SchacksMacroManager.ViewModels
                 }
             }
         }
+        public bool CanCreateIngredient => !string.IsNullOrEmpty(Name);
         public double Carbs { get => Math.Round(Entry.Carbs, 2); }
         public double Protein { get => Math.Round(Entry.Protein,2); }
         public double Fat { get => Math.Round(Entry.Fat, 2); }
-        public double Kcal { get => Math.Round(Entry.Kcal, 2); }
+        public double Kcal { get => Math.Round(Entry.Kcal, 0); }
 
         public bool NewIngredientButtonEnabled { get => AvailableIngredientsNames.Contains(NextIngredientName); }
 
@@ -72,6 +73,7 @@ namespace SchacksMacroManager.ViewModels
             AvailableIngredients = manager.AvailableIngredients;
             AvailableIngredients.ForEach(x => AvailableIngredientsNames.Add(x.Name));
             Entry = entry;
+            //manager.Entries.Add(entry);
             Name = Entry.Name;
             foreach (var ingredient in entry.IngredientInstances)
             {
